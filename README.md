@@ -36,14 +36,14 @@ This app is built using
    
         npm install
 
-#### How to run :
-After installing the mentioned dependencies, open your terminal in the root directory and then run the folling commands :
+    #### How to run :
+    After installing the mentioned dependencies, open your terminal in the root directory and then run the folling commands :
 
-    python manage.py runserver
-    cd frontend
-    npm rnu dev
+        python manage.py runserver
+        cd frontend
+        npm rnu dev
 
-These commands might vary a little bit depending upon your operating system, etc. For eg, `python` changes to `python3` in linux
+    These commands might vary a little bit depending upon your operating system, etc. For eg, `python` changes to `python3` in linux
 
 
 ## Developer:
