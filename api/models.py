@@ -1,4 +1,3 @@
-from operator import length_hint
 from django.db import models
 import string
 import random
