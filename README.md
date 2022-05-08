@@ -19,14 +19,14 @@ This app is built using
 
 ## Requirements
 
-1. Python 3
+1. __Python 3__
   - After installing Python, furthur requirements are mentioned in [`requirements.txt`](https://github.com/YASHBRO/Sing-in-Sync/blob/master/requirements.txt).
   - To install, simply run :
 
         pip install -r requirements.txt 
   
     (`pip3` in linux) in the root folder.
-2. Node
+2. __Node__
   - after installing node to your system, the furthur requirements are already mentioned in [`package.json`](https://github.com/YASHBRO/Sing-in-Sync/blob/master/frontend/package.json) in the [`frontend`](https://github.com/YASHBRO/Sing-in-Sync/tree/master/frontend) folder
   - To install, first run 
   
