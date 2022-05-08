@@ -29,9 +29,8 @@ function CreateRoomPage() {
         setGuestCanPause(e.target.value);
     }
 
-    function handleRoomButtonPressed() {
+    function handleCreateRoomBtn() {
         const csrftoken = getCookie("csrftoken");
-        console.log("yd csrfToken", csrftoken);
         const requestOptions = {
             method: "POST",
             headers: {
@@ -89,10 +88,10 @@ function CreateRoomPage() {
                         <TextField
                             required={true}
                             type="number"
+                            variant="outlined"
                             onChange={handleVotesChange}
                             value={votesToSkip}
                             inputProps={{
-                                min: 1,
                                 style: { textAlign: "center" },
                             }}
                         />
@@ -107,7 +106,7 @@ function CreateRoomPage() {
                     <Button
                         color="primary"
                         variant="contained"
-                        onClick={handleRoomButtonPressed}
+                        onClick={handleCreateRoomBtn}
                     >
                         Create A Room
                     </Button>
