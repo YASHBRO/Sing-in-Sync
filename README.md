@@ -2,7 +2,7 @@
 
 #### Work In Progress
 
-Web app similar to house party, where a user can create a room or join an existing room, which is controled by the host.
+Web app similar to houseparty, where a user can create a room or join an existing room, which is controled by the host.
 
 This app is built using 
 - Frontend : React Js
