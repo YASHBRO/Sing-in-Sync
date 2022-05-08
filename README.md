@@ -7,7 +7,7 @@ Web app similar to houseparty, where a user can create a room or join an existin
 This app is built using 
 - Frontend : React Js
 - Backend : Django
-- Database : sqlite3
+- Database : SQLite
 
 ## About
 
