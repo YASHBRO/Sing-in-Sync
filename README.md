@@ -21,17 +21,27 @@ This app is built using
 
 1. Python 3
   - After installing Python, furthur requirements are mentioned in [`requirements.txt`](https://github.com/YASHBRO/Sing-in-Sync/blob/master/requirements.txt).
-  - To install, simply run `pip install -r requirements.txt` (`pip3` in linux) in the root folder.
+  - To install, simply run :
+
+        pip install -r requirements.txt 
+  
+    (`pip3` in linux) in the root folder.
 2. Node
   - after installing node to your system, the furthur requirements are already mentioned in [`package.json`](https://github.com/YASHBRO/Sing-in-Sync/blob/master/frontend/package.json) in the [`frontend`](https://github.com/YASHBRO/Sing-in-Sync/tree/master/frontend) folder
-  - To install, first run `cd frontend` or manually move frontend folder, then run `npm install`
+  - To install, first run 
+  
+        cd frontend
+  
+    or manually move frontend folder, then run
+   
+        npm install
 
 #### How to run :
 After installing the mentioned dependencies, open your terminal in the root directory and then run the folling commands :
 
-1. `python manage.py runserver`
-2. `cd frontend`
-3. `npm rnu dev`
+    python manage.py runserver
+    cd frontend
+    npm rnu dev
 
 These commands might vary a little bit depending upon your operating system, etc. For eg, `python` changes to `python3` in linux
 
