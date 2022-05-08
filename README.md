@@ -32,7 +32,9 @@ This app is built using
   
         cd frontend
   
-    or manually move frontend folder, then run
+    or manually move frontend folder,
+    
+    then run
    
         npm install
 
