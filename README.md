@@ -38,7 +38,7 @@ This app is built using
    
         npm install
 
-    #### How to run :
+    ### How to run :
     After installing the mentioned dependencies, open your terminal in the root directory and then run the folling commands :
 
         python manage.py runserver
