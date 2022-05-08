@@ -4,6 +4,11 @@
 
 Web app similar to house party, where a user can create a room or join an existing room, which is controled by the host.
 
+This app is built using 
+- Frontend : React Js
+- Backend : Django
+- Database : sqlite3
+
 ## About
 
 - A host can create a room and play songs of his choice from the Spotify API integrated in this app.
