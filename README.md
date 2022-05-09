@@ -2,7 +2,7 @@
 
 #### Work In Progress
 
-Web app similar to houseparty, where a user can create a room or join an existing room, which is controled by the host.
+Web app similar to houseparty, where a user can create a room or join an existing room, which is controlled by the host.
 
 This app is built using 
 - Frontend : React Js
@@ -12,7 +12,7 @@ This app is built using
 ## About
 
 - A host can create a room and play songs of his choice from the Spotify API integrated in this app.
-- The song is played syncronised over all the guests' devices that are joined to that particular room.
+- The song is played synchronized over all the guests' devices that are joined to that particular room.
 - Guest can skip a song by voting, the minimum votes required to skip is set by the host.
 - The host can also give permission to guests to play/pause a song.
 
@@ -20,14 +20,14 @@ This app is built using
 ## Requirements
 
 1. __Python 3__
-  - After installing Python, furthur requirements are mentioned in [`requirements.txt`](https://github.com/YASHBRO/Sing-in-Sync/blob/master/requirements.txt).
+  - After installing Python, further requirements are mentioned in [`requirements.txt`](https://github.com/YASHBRO/Sing-in-Sync/blob/master/requirements.txt).
   - To install, simply run :
 
         pip install -r requirements.txt 
   
-    (`pip3` in linux) in the root folder.
+    (`pip3` in Linux) in the root folder.
 2. __Node__
-  - after installing node to your system, the furthur requirements are already mentioned in [`package.json`](https://github.com/YASHBRO/Sing-in-Sync/blob/master/frontend/package.json) in the [`frontend`](https://github.com/YASHBRO/Sing-in-Sync/tree/master/frontend) folder
+  - after installing node to your system, the further requirements are already mentioned in [`package.json`](https://github.com/YASHBRO/Sing-in-Sync/blob/master/frontend/package.json) in the [`frontend`](https://github.com/YASHBRO/Sing-in-Sync/tree/master/frontend) folder
   - To install, first run 
   
         cd frontend
@@ -39,13 +39,13 @@ This app is built using
         npm install
 
     ### How to run :
-    After installing the mentioned dependencies, open your terminal in the root directory and then run the folling commands :
+    After installing the mentioned dependencies, open your terminal in the root directory and then run the following commands :
 
         python manage.py runserver
         cd frontend
         npm rnu dev
 
-    These commands might vary a little bit depending upon your operating system, etc. For eg, `python` changes to `python3` in linux
+    These commands might vary a little bit depending upon your operating system, etc. For eg, `python` changes to `python3` in Linux
 
 
 ## Developer:
