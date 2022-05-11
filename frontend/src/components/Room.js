@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Grid, Typography, Button } from "@material-ui/core";
+import CsrfToken from "./CsrfToken";
+import { getCookie } from "../utilities/GetCookie";
 
 function Room() {
     const [votesToSkip, setVotesToSkip] = useState(2);
@@ -8,6 +11,7 @@ function Room() {
     const [roomCode, setRoomCode] = useState("");
 
     const params = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setRoomCode(params.roomCode);
@@ -30,13 +34,57 @@ function Room() {
             });
     };
 
+    const handleLeaveBtn = () => {
+        const csrftoken = getCookie("csrftoken");
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken,
+            },
+        };
+        fetch("/api/leave-room", requestOptions)
+            .then((res) => res.json())
+            .then((data) => {
+                navigate("/");
+            });
+    };
+
     return (
-        <div>
-            <h3>{roomCode}</h3>
-            <p>Votes to skip : {votesToSkip}</p>
-            <p>Guest can Pause : {guestCanPause.toString()}</p>
-            <p>Is Host : {isHost.toString()}</p>
-        </div>
+        <Grid container spacing={1}>
+            <Grid item xs={12} align="center">
+                <Typography variant="h4" component="h4">
+                    Code: {roomCode}
+                </Typography>
+            </Grid>
+            <Grid item xs={12} align="center">
+                <Typography variant="h6" component="h6">
+                    Votes: {votesToSkip}
+                </Typography>
+            </Grid>
+            <Grid item xs={12} align="center">
+                <Typography variant="h6" component="h6">
+                    Guest Can Pause: {guestCanPause.toString()}
+                </Typography>
+            </Grid>
+            <Grid item xs={12} align="center">
+                <Typography variant="h6" component="h6">
+                    Host: {isHost.toString()}
+                </Typography>
+            </Grid>
+            <Grid item xs={12} align="center">
+                <form>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={handleLeaveBtn}
+                    >
+                        <CsrfToken />
+                        Leave Room
+                    </Button>
+                </form>
+            </Grid>
+        </Grid>
     );
 }
 
