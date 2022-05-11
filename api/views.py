@@ -1,3 +1,4 @@
+from email import message
 from django.http import JsonResponse
 from rest_framework import generics, status
 from .serializers import RoomSerializer, CreateRoomSerializer
@@ -99,3 +100,18 @@ class UserInRoom(APIView):
             'code': self.request.session.get('room_code')
         }
         return JsonResponse(data, status=status.HTTP_200_OK)
+
+
+class LeaveRoom(APIView):
+    @method_decorator(ensure_csrf_cookie)
+    def post(self, request):
+        if 'room_code' in self.request.session:
+            self.request.session.pop('room_code')
+            host_id = self.request.session.session_key
+
+            room_results = Room.objects.filter(host=host_id)
+            if len(room_results) > 0:
+                room = room_results[0]
+                room.delete()
+
+        return Response({"message": "Success"}, status=status.HTTP_200_OK)
