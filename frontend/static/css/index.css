@@ -12,6 +12,16 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    color: #e5e5e5;
+}
+
+.MuiInputBase-input {
+    color: #e5e5e5 !important;
+}
+
+.MuiFormHelperText-root,
+.MuiFormLabel-root {
+    color: #ddd !important;
 }
 
 #main {
@@ -20,4 +30,11 @@ body {
     top: 0;
     width: 100vw;
     height: 100vh;
+}
+
+#gradient {
+    width: 100vw;
+    height: 100vh;
+    padding: 0px;
+    margin: 0px;
 }
