@@ -5,6 +5,7 @@ import HomePage from "./HomePage";
 import Page404 from "./Page404";
 import Room from "./Room";
 import RoomJoinPage from "./RoomJoinPage";
+import RoomSettingsPage from "./RoomSettingsPage";
 
 function Router() {
     return (
@@ -16,6 +17,10 @@ function Router() {
                 <Route path="/create" element={<CreateRoomPage />} />
                 <Route path="/join" element={<RoomJoinPage />} />
                 <Route path="/room/:roomCode" element={<Room />} />
+                <Route
+                    path="/room/:roomCode/settings"
+                    element={<RoomSettingsPage />}
+                />
             </Routes>
         </BrowserRouter>
     );

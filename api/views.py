@@ -1,7 +1,7 @@
 from email import message
 from django.http import JsonResponse
 from rest_framework import generics, status
-from .serializers import RoomSerializer, CreateRoomSerializer
+from .serializers import RoomSerializer, CreateRoomSerializer, UpdateRoomSerializer
 from .models import Room
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -27,7 +27,7 @@ class GetRoom(APIView):
         if code != None:
             room = Room.objects.filter(code=code)
 
-            if len(room) > 0:
+            if room.exists():
                 data = RoomSerializer(room[0]).data
                 data['is_host'] = self.request.session.session_key == room[0].host
                 return Response(data, status=status.HTTP_200_OK)
@@ -50,7 +50,7 @@ class JoinRoom(APIView):
         if code != None:
             room_result = Room.objects.filter(code=code)
 
-            if len(room_result) > 0:
+            if room_result.exists():
                 room = room_result[0]
                 self.request.session['room_code'] = code
                 return Response({"Message": "Room found and joined"}, status=status.HTTP_200_OK)
@@ -110,8 +110,40 @@ class LeaveRoom(APIView):
             host_id = self.request.session.session_key
 
             room_results = Room.objects.filter(host=host_id)
-            if len(room_results) > 0:
+            if room_results.exists():
                 room = room_results[0]
                 room.delete()
 
         return Response({"message": "Success"}, status=status.HTTP_200_OK)
+
+
+class UpdateRoom(APIView):
+    serializer_class = UpdateRoomSerializer
+
+    def patch(self, request):
+        serializer = self.serializer_class(data=request.data)
+
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        if serializer.is_valid():
+            guest_can_pause = serializer.data.get('guest_can_pause')
+            votes_to_skip = serializer.data.get('votes_to_skip')
+            code = serializer.data.get('code')
+
+            queryset = Room.objects.filter(code=code)
+
+            if not queryset.exists():
+                return Response({"message": "Room not found"}, status=status.HTTP_404_NOT_FOUND)
+
+            room = queryset[0]
+            user_id = self.request.session.session_key
+            if room.host != user_id:
+                return Response({"message": "Not allowed"}, status=status.HTTP_403_FORBIDDEN)
+
+            room.guest_can_pause = guest_can_pause
+            room.votes_to_skip = votes_to_skip
+            room.save(update_fields=["guest_can_pause", "votes_to_skip"])
+            return Response(RoomSerializer(room).data, status=status.HTTP_200_OK)
+
+        return Response({"Bad Request": "Invalid Data..."}, status=status.HTTP_400_BAD_REQUEST)

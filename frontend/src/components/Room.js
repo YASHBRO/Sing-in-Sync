@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import { Grid, Typography, Button } from "@material-ui/core";
 import CsrfToken from "./CsrfToken";
 import { getCookie } from "../utilities/GetCookie";
@@ -12,6 +12,7 @@ function Room() {
 
     const params = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         setRoomCode(params.roomCode);
@@ -27,7 +28,6 @@ function Room() {
         fetch(`/api/get-room?code=${roomCode}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log("yd", data);
                 setVotesToSkip(data.votes_to_skip);
                 setGuestCanPause(data.guest_can_pause);
                 setIsHost(data.is_host);
@@ -45,7 +45,7 @@ function Room() {
         };
         fetch("/api/leave-room", requestOptions)
             .then((res) => res.json())
-            .then((data) => {
+            .then(() => {
                 navigate("/");
             });
     };
@@ -84,6 +84,15 @@ function Room() {
                     </Button>
                 </form>
             </Grid>
+            {isHost && (
+                <Grid item xs={12} align="center">
+                    <Link to={`${location.pathname}/settings`}>
+                        <Button variant="contained" color="info">
+                            Settings
+                        </Button>
+                    </Link>
+                </Grid>
+            )}
         </Grid>
     );
 }
