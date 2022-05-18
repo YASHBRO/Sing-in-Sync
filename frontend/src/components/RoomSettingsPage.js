@@ -1,22 +1,86 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 import {
-    Button,
-    FormControl,
-    FormHelperText,
-    FormControlLabel,
     Grid,
+    Typography,
     TextField,
-    RadioGroup,
+    FormHelperText,
+    FormControl,
     Radio,
-} from "@mui/material";
+    RadioGroup,
+    FormControlLabel,
+} from "@material-ui/core";
 import CsrfToken from "./CsrfToken";
 import { getCookie } from "../utilities/GetCookie";
 
 function RoomSettingsPage() {
-    const csrftoken = getCookie("csrftoken");
+    const [guestCanPause, setGuestCanPause] = useState(true);
+    const [votesToSkip, setVotesToSkip] = useState(2);
+    const [roomCode, setRoomCode] = useState("");
+
+    const navigate = useNavigate();
+    const params = useParams();
+
+    function handleVotesChange(e) {
+        setVotesToSkip(e.target.value);
+    }
+
+    function handleGuestCanPauseChange(e) {
+        setGuestCanPause(e.target.value);
+    }
+
+    useEffect(() => {
+        setRoomCode(params.roomCode);
+    }, []);
+
+    useEffect(() => {
+        if (roomCode.length > 0) {
+            getRoomDetails();
+        }
+    }, [roomCode]);
+
+    const getRoomDetails = () => {
+        fetch(`/api/get-room?code=${roomCode}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setVotesToSkip(data.votes_to_skip);
+                setGuestCanPause(data.guest_can_pause);
+                setIsHost(data.is_host);
+            });
+    };
+
+    function handleCreateRoomBtn() {
+        const csrftoken = getCookie("csrftoken");
+        const requestOptions = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken,
+            },
+            body: JSON.stringify({
+                votes_to_skip: votesToSkip,
+                guest_can_pause: guestCanPause,
+                code: roomCode,
+            }),
+        };
+        fetch("/api/update-room", requestOptions)
+            .then((res) => res.json())
+            .then(() => navigate(-1));
+    }
+
+    const handleBackButton = () => {
+        navigate(-1);
+    };
 
     return (
-        <Grid container spacing={1}>
-            <Grid item xs={12}>
+        <form>
+            <Grid container spacing={1}>
+                <Grid item xs={12} align="center">
+                    <Typography component="h4" variant="h4">
+                        Update this Room
+                    </Typography>
+                </Grid>
                 <Grid item xs={12} align="center">
                     <CsrfToken />
                     <FormControl component="fieldset">
@@ -27,17 +91,17 @@ function RoomSettingsPage() {
                         </FormHelperText>
                         <RadioGroup
                             row
-                            defaultValue="true"
-                            // onChange={handleGuestCanPauseChange}
+                            value={Boolean(guestCanPause)}
+                            onChange={handleGuestCanPauseChange}
                         >
                             <FormControlLabel
-                                value="true"
+                                value={true}
                                 control={<Radio color="primary" />}
                                 label="Play/Pause"
                                 labelPlacement="bottom"
                             />
                             <FormControlLabel
-                                value="false"
+                                value={false}
                                 control={<Radio color="secondary" />}
                                 label="No Control"
                                 labelPlacement="bottom"
@@ -51,8 +115,8 @@ function RoomSettingsPage() {
                             required={true}
                             type="number"
                             variant="outlined"
-                            // onChange={handleVotesChange}
-                            // value={votesToSkip}
+                            onChange={handleVotesChange}
+                            value={votesToSkip}
                             inputProps={{
                                 style: { textAlign: "center" },
                             }}
@@ -64,11 +128,26 @@ function RoomSettingsPage() {
                         </FormHelperText>
                     </FormControl>
                 </Grid>
+                <Grid item xs={12} align="center">
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={handleCreateRoomBtn}
+                    >
+                        Update
+                    </Button>
+                </Grid>
+                <Grid item xs={12} align="center">
+                    <Button
+                        color="secondary"
+                        variant="contained"
+                        onClick={handleBackButton}
+                    >
+                        Back
+                    </Button>
+                </Grid>
             </Grid>
-            <Grid item xs={12}>
-                <Button>Update</Button>
-            </Grid>
-        </Grid>
+        </form>
     );
 }
 

@@ -5,7 +5,6 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme/Pallette";
 
 function App() {
-    console.log("yd theme", theme);
     return (
         <ThemeProvider theme={theme}>
             <Router />
