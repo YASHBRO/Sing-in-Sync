@@ -46,11 +46,10 @@ function RoomSettingsPage() {
             .then((data) => {
                 setVotesToSkip(data.votes_to_skip);
                 setGuestCanPause(data.guest_can_pause);
-                setIsHost(data.is_host);
             });
     };
 
-    function handleCreateRoomBtn() {
+    function handleUpdateRoomBtn() {
         const csrftoken = getCookie("csrftoken");
         const requestOptions = {
             method: "PATCH",
@@ -91,17 +90,18 @@ function RoomSettingsPage() {
                         </FormHelperText>
                         <RadioGroup
                             row
-                            value={Boolean(guestCanPause)}
+                            name="guestCanPause"
+                            value={String(guestCanPause)}
                             onChange={handleGuestCanPauseChange}
                         >
                             <FormControlLabel
-                                value={true}
+                                value="true"
                                 control={<Radio color="primary" />}
                                 label="Play/Pause"
                                 labelPlacement="bottom"
                             />
                             <FormControlLabel
-                                value={false}
+                                value="false"
                                 control={<Radio color="secondary" />}
                                 label="No Control"
                                 labelPlacement="bottom"
@@ -115,6 +115,7 @@ function RoomSettingsPage() {
                             required={true}
                             type="number"
                             variant="outlined"
+                            name="votesToSkip"
                             onChange={handleVotesChange}
                             value={votesToSkip}
                             inputProps={{
@@ -132,7 +133,7 @@ function RoomSettingsPage() {
                     <Button
                         color="primary"
                         variant="contained"
-                        onClick={handleCreateRoomBtn}
+                        onClick={handleUpdateRoomBtn}
                     >
                         Update
                     </Button>
