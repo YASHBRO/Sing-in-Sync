@@ -13,15 +13,18 @@ body {
     align-items: center;
     flex-direction: column;
     color: #e5e5e5;
+    text-shadow: 2px 1px 5px rgba(64, 64, 64, 0.6);
 }
 
 .MuiInputBase-input {
     color: #e5e5e5 !important;
+    text-shadow: 2px 1px 5px rgba(64, 64, 64, 0.6);
 }
 
 .MuiFormHelperText-root,
 .MuiFormLabel-root {
     color: #ddd !important;
+    text-shadow: 2px 1px 5px rgba(64, 64, 64, 0.6);
 }
 
 #main {

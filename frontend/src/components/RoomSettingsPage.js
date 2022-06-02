@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import {
     Grid,
@@ -11,15 +11,16 @@ import {
     RadioGroup,
     FormControlLabel,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import CsrfToken from "./CsrfToken";
 import { getCookie } from "../utilities/GetCookie";
 
-function CreateRoomPage() {
+function RoomSettingsPage() {
     const [guestCanPause, setGuestCanPause] = useState(true);
     const [votesToSkip, setVotesToSkip] = useState(2);
+    const [roomCode, setRoomCode] = useState("");
 
     const navigate = useNavigate();
+    const params = useParams();
 
     function handleVotesChange(e) {
         setVotesToSkip(e.target.value);
@@ -29,10 +30,29 @@ function CreateRoomPage() {
         setGuestCanPause(e.target.value);
     }
 
-    function handleCreateRoomBtn() {
+    useEffect(() => {
+        setRoomCode(params.roomCode);
+    }, []);
+
+    useEffect(() => {
+        if (roomCode.length > 0) {
+            getRoomDetails();
+        }
+    }, [roomCode]);
+
+    const getRoomDetails = () => {
+        fetch(`/api/get-room?code=${roomCode}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setVotesToSkip(data.votes_to_skip);
+                setGuestCanPause(data.guest_can_pause);
+            });
+    };
+
+    function handleUpdateRoomBtn() {
         const csrftoken = getCookie("csrftoken");
         const requestOptions = {
-            method: "POST",
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": csrftoken,
@@ -40,19 +60,24 @@ function CreateRoomPage() {
             body: JSON.stringify({
                 votes_to_skip: votesToSkip,
                 guest_can_pause: guestCanPause,
+                code: roomCode,
             }),
         };
-        fetch("/api/create", requestOptions)
+        fetch("/api/update-room", requestOptions)
             .then((res) => res.json())
-            .then((data) => navigate(`/room/${data.code}`));
+            .then(() => navigate(-1));
     }
+
+    const handleBackButton = () => {
+        navigate(-1);
+    };
 
     return (
         <form>
             <Grid container spacing={1}>
                 <Grid item xs={12} align="center">
                     <Typography component="h4" variant="h4">
-                        Create A Room
+                        Update this Room
                     </Typography>
                 </Grid>
                 <Grid item xs={12} align="center">
@@ -65,7 +90,8 @@ function CreateRoomPage() {
                         </FormHelperText>
                         <RadioGroup
                             row
-                            defaultValue="true"
+                            name="guestCanPause"
+                            value={String(guestCanPause)}
                             onChange={handleGuestCanPauseChange}
                         >
                             <FormControlLabel
@@ -89,6 +115,7 @@ function CreateRoomPage() {
                             required={true}
                             type="number"
                             variant="outlined"
+                            name="votesToSkip"
                             onChange={handleVotesChange}
                             value={votesToSkip}
                             inputProps={{
@@ -106,17 +133,16 @@ function CreateRoomPage() {
                     <Button
                         color="primary"
                         variant="contained"
-                        onClick={handleCreateRoomBtn}
+                        onClick={handleUpdateRoomBtn}
                     >
-                        Create A Room
+                        Update
                     </Button>
                 </Grid>
                 <Grid item xs={12} align="center">
                     <Button
                         color="secondary"
                         variant="contained"
-                        to="/"
-                        component={Link}
+                        onClick={handleBackButton}
                     >
                         Back
                     </Button>
@@ -126,4 +152,4 @@ function CreateRoomPage() {
     );
 }
 
-export default CreateRoomPage;
+export default RoomSettingsPage;

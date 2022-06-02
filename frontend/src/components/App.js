@@ -1,15 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 import { render } from "react-dom";
 import Router from "./Router";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../theme/Pallette";
+import { CssBaseline } from "@mui/material";
 
-export default class App extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return <Router />;
-    }
+function App() {
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Router />
+        </ThemeProvider>
+    );
 }
+
+export default App;
 
 const appDiv = document.getElementById("app");
 
