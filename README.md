@@ -1,6 +1,5 @@
 <h1 align="center"> Sing-in-Sync (WIP)</h1>
 
-#### Work In Progress
 
 Web app similar to houseparty, where a user can create a room or join an existing room, which is controlled by the host.
 
@@ -43,7 +42,7 @@ This app is built using
 
         python manage.py runserver
         cd frontend
-        npm rnu dev
+        npm run dev
 
     These commands might vary a little bit depending upon your operating system, etc. For eg, `python` changes to `python3` in Linux
 
@@ -57,5 +56,5 @@ My GitHub - [YASHBRO](https://github.com/YASHBRO/ "Contact me here")
 
 _For suggestions or bug/error report:_
 - Raise an issue, I'll surely look into it as soon as possible
-- Or mail me @ :- [yashjoglekar2012@gmail.com](https://mail.google.com/mail/u/0/?fs=1&to=yashjoglekar1220@gmail.com&su=Issue+with+MAD+repository&body=Write+your+issues+here:%0A "Click to send an email")
+- Or mail me @ :- [yashjoglekar2012@gmail.com](https://mail.google.com/mail/u/0/?fs=1&to=yashjoglekar1220@gmail.com&su=Issue+with+Sing+in+Sync+repository&body=Write+your+issues+here:%0A "Click to send an email")
 
