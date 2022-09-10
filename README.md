@@ -43,7 +43,7 @@ This app is built using
 
         python manage.py runserver
         cd frontend
-        npm rnu dev
+        npm run dev
 
     These commands might vary a little bit depending upon your operating system, etc. For eg, `python` changes to `python3` in Linux
 
